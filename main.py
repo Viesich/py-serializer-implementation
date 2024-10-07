@@ -4,9 +4,18 @@ from car.models import Car
 from car.serializers import CarSerializer
 
 
-def serialize_car_object(car: Car) -> bytes:
-    serializer = CarSerializer(car)
-    return json.dumps(serializer.data).encode("utf-8")
+def serialize_car_object(car: Car) -> json:
+    data_car = {
+        "id": car.id,
+        "manufacturer": car.manufacturer,
+        "model": car.model,
+        "horse_powers": car.horse_powers,
+        "is_broken": car.is_broken,
+        "problem_description": car.problem_description,
+    }
+    json_str = json.dumps(data_car, separators=(',', ':'))
+
+    return json_str.encode('utf-8')
 
 
 def deserialize_car_object(json_bytes: bytes) -> Car:
